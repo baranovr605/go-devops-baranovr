@@ -12,7 +12,7 @@ import (
 var endpointURL string = "http://srv.msk01.gigacorp.local/_stats"
 var failedAttemps int = 0
 
-// var secondSleep time.Duration = 1
+var secondSleep time.Duration = 5
 
 func errorCheck() {
 	failedAttemps += 1
@@ -22,7 +22,7 @@ func errorCheck() {
 	}
 }
 
-func dataCheck(url string) {
+func dataCheck(url string, sleepTime time.Duration) {
 	for {
 		res, err := http.Get(url)
 
@@ -75,10 +75,10 @@ func dataCheck(url string) {
 			fmt.Printf("Network bandwidth usage high: %d Mbit/s available\n", int(mbitfreeBandwidth))
 		}
 
-		time.Sleep(time.Second)
+		time.Sleep(sleepTime * time.Second)
 	}
 }
 
 func main() {
-	dataCheck(endpointURL)
+	dataCheck(endpointURL, secondSleep)
 }

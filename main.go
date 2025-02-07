@@ -58,21 +58,21 @@ func dataCheck(url string) {
 			fmt.Printf("Load Average is too high: %d\n", dataSlice[0])
 		}
 
-		percentMemoryUsage := dataSlice[2] * 100 / dataSlice[1]
+		percentMemoryUsage := float64(dataSlice[2]) * 100 / float64(dataSlice[1])
 		if percentMemoryUsage > 80 {
-			fmt.Printf("Memory usage too high: %d%%\n", percentMemoryUsage)
+			fmt.Printf("Memory usage too high: %d%%\n", int(percentMemoryUsage))
 		}
 
-		percentDiskUsage := (dataSlice[4] / dataSlice[3]) * 100
+		percentDiskUsage := float64(dataSlice[4]) * 100 / float64(dataSlice[3])
 		if percentDiskUsage > 90 {
-			mbFreeDiskSpace := (dataSlice[3] - dataSlice[4]) / (1024 * 1024)
-			fmt.Printf("Free disk space is too low: %d Mb left\n", mbFreeDiskSpace)
+			mbFreeDiskSpace := (float64(dataSlice[3]) - float64(dataSlice[4])) / (1024 * 1024)
+			fmt.Printf("Free disk space is too low: %d Mb left\n", int(mbFreeDiskSpace))
 		}
 
-		percentBandwithNetwork := (dataSlice[6] / dataSlice[5]) * 100
+		percentBandwithNetwork := float64(dataSlice[6]) * 100 / float64(dataSlice[5])
 		if percentBandwithNetwork > 90 {
-			mbitfreeBandwidth := (dataSlice[5] - dataSlice[6]) / 1000000
-			fmt.Printf("Network bandwidth usage high: %d Mbit/s available\n", mbitfreeBandwidth)
+			mbitfreeBandwidth := (float64(dataSlice[5]) - float64(dataSlice[6])) / 1000000
+			fmt.Printf("Network bandwidth usage high: %d Mbit/s available\n", int(mbitfreeBandwidth))
 		}
 
 		time.Sleep(time.Second)
